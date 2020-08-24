@@ -17,6 +17,10 @@ public class GrDirectory {
         return poFiles;
     }
 
+    public List<File> getNewElFiles() {
+        return newElPaths;
+    }
+
     public void setPoFiles(List<File> poFiles) {
         this.poFiles = poFiles;
     }

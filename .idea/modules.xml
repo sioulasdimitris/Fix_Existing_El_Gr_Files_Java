@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Ojs_locale_Files.iml" filepath="$PROJECT_DIR$/Ojs_locale_Files.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/FixExistingLocaleFiles.iml" filepath="$PROJECT_DIR$/.idea/FixExistingLocaleFiles.iml" />
     </modules>
   </component>
 </project>

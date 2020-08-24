@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -9,10 +7,26 @@ import java.util.List;
 public class FileUtils {
 
     public static class FileUtilsMethods {
-        public static String destination ="C:\\Users\\dsioulas\\Desktop\\new_locales";//the destination all the new files will be pasted
-        public static String newElFilesPath = destination+"\\el-existing-files";//the destination for the el_GR missing files to be pasted
+        public static String desktopPath ="";//Desktop path
+        public static String rootDirectoryName = "\\new_locales";//root directory name
+        public static String elExistingFilesName = "\\el-existing-files";//child directory name
+
+        public static String localesRootDirectory ="";//root directory path
+        public static String elFilesThatDidntExistDirectory = "";//child directory path
+
         public static String generalPath = "C:\\xampp\\htdocs\\ojs3_2_1";
         public static String el_GRDirectoryName = "el_GR";
+
+        public static void createDirectories(){
+
+            desktopPath = getDesktopPath();
+
+            localesRootDirectory = desktopPath+rootDirectoryName;
+            elFilesThatDidntExistDirectory = desktopPath+rootDirectoryName+elExistingFilesName;
+
+            new File(localesRootDirectory).mkdirs(); //create the root directory
+            new File(elFilesThatDidntExistDirectory).mkdirs();//create the child directory inside the root directory
+        }//createDirectories
 
 
         //Receives a root as a base path and a name as a directory name. Returns a list with all the paths from the directories with that name that exist inside the root path.
@@ -88,10 +102,16 @@ public class FileUtils {
         public static void deleteFile(String filePath){
             File myObj = new File(filePath);
             if (myObj.delete()) {
-                System.out.println("Deleted the file: " + filePath);
+                //System.out.println("Deleted the file: " + filePath);
             } else {
-                System.out.println("Failed to delete the file.");
+                //System.out.println("Failed to delete the file.");
             }
+        }
+
+        public static void DeleteFilesContext(File file) throws FileNotFoundException {
+            PrintWriter writer = new PrintWriter(file);
+            writer.print("");
+            writer.close();
         }
 
         public static void addTextToFile(String path, String newText){
@@ -106,6 +126,42 @@ public class FileUtils {
                 System.err.println("IOException: " + ioe.getMessage());
             }
         }//addTextToFile
+
+
+        public static void addTextToFile2(String path, String newText){
+            try
+            {
+                FileWriter fw = new FileWriter(path,false); //the true will append the new data
+                fw.write(newText);//appends the string to the file
+                fw.close();
+            }
+            catch(IOException ioe)
+            {
+                System.err.println("IOException: " + ioe.getMessage());
+            }
+        }//addTextToFile
+
+
+        public static String fromStringListToString(List<String> stringList){
+            String delim = "\n";
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            while (i < stringList.size() - 1) {
+                sb.append(stringList.get(i));
+                sb.append(delim);
+                i++;
+            }
+            sb.append(stringList.get(i));
+
+            String res = sb.toString();
+            return res;
+        }
+
+        public static String getDesktopPath(){
+            File desktopDir = new File(System.getProperty("user.home"), "Desktop");
+            desktopPath = desktopDir.getPath();
+            return desktopPath;
+        }//getDesktopPath
 
     }//FileUtilsMethods
 
